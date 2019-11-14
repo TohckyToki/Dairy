@@ -471,7 +471,9 @@ namespace Dairy {
                         LoadData();
                         if (ViewArea.IsEnabled == false) {
                             ViewArea.IsEnabled = true;
-                            ViewArea.DataContext = EditArea.DataContext;
+                            value.HasNext = ((DB.Dairy)ViewArea.DataContext).HasNext;
+                            value.HasPrevious = ((DB.Dairy)ViewArea.DataContext).HasPrevious;
+                            ViewArea.DataContext = value;
                             ViewArea.Visibility = Visibility.Visible;
                         } else {
                             Details.Visibility = Visibility.Visible;
