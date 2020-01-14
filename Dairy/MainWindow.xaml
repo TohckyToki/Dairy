@@ -1,4 +1,4 @@
-﻿<Window x:Class="Dairy.MainWindow"
+﻿<Controls:MetroWindow x:Class="Dairy.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -6,8 +6,29 @@
         xmlns:local="clr-namespace:Dairy"
         xmlns:property="clr-namespace:Dairy.Properties"
         xmlns:sys="clr-namespace:System;assembly=mscorlib"
+        xmlns:Controls="http://metro.mahapps.com/winfx/xaml/controls"
+        xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
         mc:Ignorable="d"
-        Title="Dairy" SizeToContent="WidthAndHeight" WindowStartupLocation="CenterScreen" ResizeMode="CanMinimize" Loaded="Window_Loaded" Icon="pack://siteoforigin:,,,/Resources/book.ico">
+        Title="日记" SizeToContent="WidthAndHeight" WindowStartupLocation="CenterScreen" ResizeMode="CanMinimize" Loaded="Window_Loaded">
+    <Controls:MetroWindow.IconTemplate>
+        <DataTemplate>
+            <iconPacks:PackIconModern 
+                Width="{TemplateBinding Width}" 
+                Height="{TemplateBinding Height}" 
+                Margin="4 4 0 4" 
+                Foreground="{DynamicResource IdealForegroundColorBrush}"
+                Kind="BookOpen" />
+        </DataTemplate>
+    </Controls:MetroWindow.IconTemplate>
+    <Controls:MetroWindow.RightWindowCommands>
+        <Controls:WindowCommands>
+            <Button Margin="0 0 10 0">
+                <StackPanel Orientation="Horizontal">
+                    <iconPacks:PackIconModern Width="16" Height="16" Kind="Settings" />
+                </StackPanel>
+            </Button>
+        </Controls:WindowCommands>
+    </Controls:MetroWindow.RightWindowCommands>
     <Window.Resources>
         <Style x:Key="MyButton" TargetType="Button">
             <Setter Property="OverridesDefaultStyle" Value="True" />
@@ -272,7 +293,7 @@
             <TextBox x:Name="EditThema" Text="{Binding Thema}" MaxLength="20" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="20 45" Height="25" FontSize="15" Width="280"></TextBox>
             <TextBox x:Name="EditContent" Text="{Binding Content}" Margin="20 80 20 10" FontSize="15" TextWrapping="Wrap" AcceptsReturn="True" ScrollViewer.CanContentScroll="True" ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Disabled"></TextBox>
         </Grid>
-        <Grid x:Name="Options" Background="White" Margin="52 0 0 0" Visibility="Hidden">
+        <Grid x:Name="Options" Background="White" Margin="52 0 0 0" Visibility="Visible">
             <StackPanel HorizontalAlignment="Left" Width="150" Orientation="Vertical" Margin="20 10">
                 <StackPanel.Resources>
                     <Style x:Key="SingleRadio" TargetType="RadioButton">
@@ -308,16 +329,16 @@
                     <SolidColorBrush Color="LightGray"></SolidColorBrush>
                 </Border.BorderBrush>
             </Border>
-            
+
             <Grid Margin="180 10 20 10" Background="White" Visibility="{Binding IsChecked,ElementName=CommonSetting,Converter={StaticResource BoolToVis}}">
                 <StackPanel HorizontalAlignment="Left" Margin="20 5" Width="140">
-                    <TextBlock Text="每页件数设置" FontSize="15" TextAlignment="Right" Height="22"></TextBlock>
+                    <TextBlock Text="每页件数设置" FontSize="15" TextAlignment="Right" Padding="0 9" Height="40"></TextBlock>
                     <TextBlock Text="检索排序" FontSize="15" TextAlignment="Right" Height="21"></TextBlock>
                 </StackPanel>
                 <StackPanel Margin="180 5 10 5">
-                    <StackPanel Height="21" Orientation="Horizontal">
-                        <TextBox x:Name="PerPageCount" Text="{Binding Source={x:Static property:Settings.Default},Path=PerPageCount, Mode=OneWay}" FontSize="15" TextAlignment="Left" HorizontalAlignment="Left" Width="30" TextChanged="PerPageCount_TextChanged"></TextBox>
-                        <Button x:Name="ApplyPerPageCount" IsEnabled="False" Click="ApplyPerPageCount_Click" Width="30" Content="OK" Margin="5 0 0 0"></Button>
+                    <StackPanel Height="40" Orientation="Horizontal">
+                        <TextBox x:Name="PerPageCount" Text="{Binding Source={x:Static property:Settings.Default},Path=PerPageCount, Mode=OneWay}" FontSize="15" Height="25" TextAlignment="Left" HorizontalAlignment="Left" Width="30" TextChanged="PerPageCount_TextChanged"></TextBox>
+                        <Button x:Name="ApplyPerPageCount" IsEnabled="False" Click="ApplyPerPageCount_Click" Width="50" Height="26" Content="OK"></Button>
                     </StackPanel>
                     <StackPanel Height="21" Orientation="Horizontal">
                         <RadioButton GroupName="OrderByAsc" Checked="OrderByAsc_Changed" Content="Desc" VerticalContentAlignment="Center" Width="60" IsChecked="True"></RadioButton>
@@ -371,4 +392,4 @@
         </Grid>
         <TextBlock x:Name="NoticeBar" Visibility="Hidden" HorizontalAlignment="Center" Margin="0, -25 , 0, 0" Background="LightGreen" VerticalAlignment="Top" Padding="5 0" FontSize="20"></TextBlock>
     </Grid>
-</Window>
+</Controls:MetroWindow>
