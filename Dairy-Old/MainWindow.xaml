@@ -1,0 +1,374 @@
+﻿<Window x:Class="Dairy.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Dairy"
+        xmlns:property="clr-namespace:Dairy.Properties"
+        xmlns:sys="clr-namespace:System;assembly=mscorlib"
+        mc:Ignorable="d"
+        Title="Dairy" SizeToContent="WidthAndHeight" WindowStartupLocation="CenterScreen" ResizeMode="CanMinimize" Loaded="Window_Loaded" Icon="pack://siteoforigin:,,,/Resources/book.ico">
+    <Window.Resources>
+        <Style x:Key="MyButton" TargetType="Button">
+            <Setter Property="OverridesDefaultStyle" Value="True" />
+            <Setter Property="Cursor" Value="Hand" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Name="border" BorderThickness="0" BorderBrush="Black" Background="{TemplateBinding Background}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Opacity" Value="0.6" />
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter Property="Opacity" Value="0.4"></Setter>
+                                <Setter Property="Cursor" Value="No" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <BooleanToVisibilityConverter x:Key="BoolToVis" />
+    </Window.Resources>
+    <Grid Width="800" Height="480">
+        <Grid x:Name="MainArea">
+            <Grid HorizontalAlignment="Left" Height="480" VerticalAlignment="Top" Width="54" Background="LightGray">
+                <Button VerticalAlignment="Top" Height="53" HorizontalContentAlignment="Center" VerticalContentAlignment="Top" Margin="-1,-1,1,0" Background="Black" Style="{StaticResource MyButton}" Click="AddNew_Click">
+                    <Button.OpacityMask>
+                        <ImageBrush ImageSource="pack://siteoforigin:,,,/Resources/pencil.ico" Stretch="Uniform"/>
+                    </Button.OpacityMask>
+                </Button>
+                <Button VerticalAlignment="Top" Height="53" HorizontalContentAlignment="Center" VerticalContentAlignment="Top" Margin="-1,57,1,0" Background="Black" Style="{StaticResource MyButton}" Click="MultiSelect_Click">
+                    <Button.OpacityMask>
+                        <ImageBrush ImageSource="pack://siteoforigin:,,,/Resources/grid.ico" Stretch="Uniform">
+                            <ImageBrush.RelativeTransform>
+                                <TransformGroup>
+                                    <ScaleTransform CenterY="0.5" CenterX="0.5" ScaleX="0.7" ScaleY="0.7"/>
+                                    <SkewTransform CenterY="0.5" CenterX="0.5"/>
+                                    <RotateTransform CenterY="0.5" CenterX="0.5"/>
+                                    <TranslateTransform/>
+                                </TransformGroup>
+                            </ImageBrush.RelativeTransform>
+                        </ImageBrush>
+                    </Button.OpacityMask>
+                </Button>
+                <Button x:Name="MultiCheckAll" Visibility="Hidden" VerticalAlignment="Top" Height="27" VerticalContentAlignment="Top" Margin="-1,115,28,0" Background="Black" Style="{StaticResource MyButton}" Click="MultiCheckAll_Click">
+                    <Button.OpacityMask>
+                        <ImageBrush ImageSource="pack://siteoforigin:,,,/Resources/checkall.ico" Stretch="Uniform">
+                        </ImageBrush>
+                    </Button.OpacityMask>
+                </Button>
+                <Button x:Name="MultiCheckOther" Visibility="Hidden" VerticalAlignment="Top" Height="27" VerticalContentAlignment="Top" Margin="26,115,1,0" Style="{StaticResource MyButton}" Click="MultiCheckOther_Click" Background="White">
+                    <Button.OpacityMask>
+                        <ImageBrush ImageSource="pack://siteoforigin:,,,/Resources/checkall.ico" Stretch="Uniform">
+                        </ImageBrush>
+                    </Button.OpacityMask>
+                </Button>
+                <Button x:Name="MultiDelete" Visibility="Hidden" IsEnabled="False" VerticalAlignment="Top" Height="53" HorizontalContentAlignment="Center" VerticalContentAlignment="Top" Margin="-1,153,1,0" Background="Black" Style="{StaticResource MyButton}" Click="MultiDelete_Click">
+                    <Button.OpacityMask>
+                        <ImageBrush ImageSource="pack://siteoforigin:,,,/Resources/trash.ico" Stretch="Uniform">
+                            <ImageBrush.RelativeTransform>
+                                <TransformGroup>
+                                    <ScaleTransform CenterY="0.5" CenterX="0.5" ScaleX="0.8" ScaleY="0.8"/>
+                                    <SkewTransform CenterY="0.5" CenterX="0.5"/>
+                                    <RotateTransform CenterY="0.5" CenterX="0.5"/>
+                                    <TranslateTransform/>
+                                </TransformGroup>
+                            </ImageBrush.RelativeTransform>
+                        </ImageBrush>
+                    </Button.OpacityMask>
+                </Button>
+                <Button x:Name="MultiExport" Visibility="Hidden" IsEnabled="False" VerticalAlignment="Top" Height="53" HorizontalContentAlignment="Center" VerticalContentAlignment="Top" Margin="-1,201,1,0" Background="Black" Style="{StaticResource MyButton}" Click="MultiExport_Click">
+                    <Button.OpacityMask>
+                        <ImageBrush ImageSource="pack://siteoforigin:,,,/Resources/download.ico" Stretch="Uniform">
+                            <ImageBrush.RelativeTransform>
+                                <TransformGroup>
+                                    <ScaleTransform CenterY="0.5" CenterX="0.5" ScaleX="0.8" ScaleY="0.8"/>
+                                    <SkewTransform CenterY="0.5" CenterX="0.5"/>
+                                    <RotateTransform CenterY="0.5" CenterX="0.5"/>
+                                    <TranslateTransform/>
+                                </TransformGroup>
+                            </ImageBrush.RelativeTransform>
+                        </ImageBrush>
+                    </Button.OpacityMask>
+                </Button>
+                <Grid x:Name="NoOption" Visibility="Hidden" Background="Transparent" VerticalAlignment="Top" Margin="-1 56 0 0" Height="260"></Grid>
+                <Grid x:Name="FreezeAll" Visibility="Hidden" Background="Transparent" Margin="-1 0 0 53"></Grid>
+                <Button VerticalAlignment="Bottom" Height="53" Margin="-1,0,1,0" Background="Black" Style="{StaticResource MyButton}" Click="AppOption_Click">
+                    <Button.OpacityMask>
+                        <ImageBrush ImageSource="pack://siteoforigin:,,,/Resources/settings.ico"/>
+                    </Button.OpacityMask>
+                </Button>
+            </Grid>
+            <Rectangle Fill="#FFD4D4D4" HorizontalAlignment="Left" Margin="52,0,0,0" Stroke="Black" Width="1"/>
+            <ListView Margin="52 0 0 0" ScrollViewer.ScrollChanged="Details_ScrollChanged" Name="Details" ScrollViewer.HorizontalScrollBarVisibility="Disabled" PreviewKeyDown="Details_PreviewKeyDown" IsVisibleChanged="Details_IsVisibleChanged" Tag="0">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <Grid HorizontalAlignment="Stretch" Width="720" Height="100" Margin="0,0,0,0" Background="Transparent">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="{Binding Tag, RelativeSource={RelativeSource AncestorType=ListView}}"></ColumnDefinition>
+                                <ColumnDefinition Width="*"></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+                            <Grid Grid.Column="0" Background="Transparent" MouseLeftButtonDown="Select_MouseLeftButtonDown">
+                                <CheckBox Checked="Select_Changed" Unchecked="Select_Changed" VerticalAlignment="Center" HorizontalAlignment="Center" IsChecked="{Binding IsSelected}"></CheckBox>
+                                <Rectangle Margin="0 5 0 5" HorizontalAlignment="Right" Width="1" Fill="LightGray"></Rectangle>
+                            </Grid>
+                            <Grid Grid.Column="1" Background="Transparent" MouseLeftButtonDown="Item_MouseDown" Tag="{Binding WroteDate}">
+                                <TextBlock HorizontalAlignment="Left" Margin="10,10,0,0" TextWrapping="Wrap" Text="{Binding WroteDate}" VerticalAlignment="Top" FontSize="16"/>
+                                <TextBlock HorizontalAlignment="Left" Margin="115,10,0,0" TextWrapping="Wrap" Text="天气: " VerticalAlignment="Top" FontSize="16"/>
+                                <TextBlock HorizontalAlignment="Left" Margin="155,10,0,0" TextWrapping="Wrap" Text="{Binding Wheather}" VerticalAlignment="Top" FontSize="16"/>
+                                <TextBlock HorizontalAlignment="Left" Margin="10,44,10,0" TextWrapping="Wrap" Text="{Binding Content}" VerticalAlignment="Top" Width="Auto" Height="76" FontSize="14"/>
+                                <Grid HorizontalAlignment="Right" Margin="0,0,0,0" Width="70">
+                                    <Grid.Style>
+                                        <Style TargetType="{x:Type Grid}">
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType=Grid,AncestorLevel=1}, Path=IsMouseOver}" Value="False">
+                                                    <Setter Property="Visibility" Value="Hidden"></Setter>
+                                                </DataTrigger>
+                                                <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType=Grid,AncestorLevel=1}, Path=IsMouseOver}" Value="True">
+                                                    <Setter Property="Visibility" Value="Visible"></Setter>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Grid.Style>
+
+                                    <Button x:Name="EditDairy" VerticalAlignment="Top" Height="30" HorizontalContentAlignment="Center" VerticalContentAlignment="Top" BorderBrush="{x:Null}" Foreground="White" Background="Black" HorizontalAlignment="Left" Width="30" Style="{StaticResource MyButton}" Tag="{Binding WroteDate}" Click="EditDairy_Click">
+                                        <Button.OpacityMask>
+                                            <ImageBrush ImageSource="pack://siteoforigin:,,,/Resources/edit.ico" Stretch="Uniform"/>
+                                        </Button.OpacityMask>
+                                    </Button>
+                                    <Button x:Name="RemoveDairy" VerticalAlignment="Top" Height="30" HorizontalContentAlignment="Center" VerticalContentAlignment="Top" BorderBrush="{x:Null}" Foreground="White" Margin="35,0,0,0" Background="Red" HorizontalAlignment="Left" Width="30" Style="{StaticResource MyButton}" Tag="{Binding WroteDate}" Click="RemoveDairy_Click">
+                                        <Button.OpacityMask>
+                                            <ImageBrush ImageSource="pack://siteoforigin:,,,/Resources/trash.ico" Stretch="Uniform"/>
+                                        </Button.OpacityMask>
+                                    </Button>
+                                </Grid>
+                            </Grid>
+                        </Grid>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+                <ListView.ItemContainerStyle>
+                    <Style TargetType="{x:Type ListViewItem}">
+                        <Setter Property="Focusable" Value="False"></Setter>
+                    </Style>
+                </ListView.ItemContainerStyle>
+            </ListView>
+            <Grid x:Name="Pages" Margin="52 0 20 0" VerticalAlignment="Bottom" Height="40">
+                <Grid.Resources>
+                    <Style x:Key="PagesButton" TargetType="Button">
+                        <Setter Property="OverridesDefaultStyle" Value="True" />
+                        <Setter Property="Cursor" Value="Hand" />
+                        <Setter Property="Width" Value="32" />
+                        <Setter Property="Height" Value="30" />
+                        <Setter Property="FontSize" Value="18" />
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="Button">
+                                    <Border Name="border" BorderThickness="0" BorderBrush="Black" Background="{TemplateBinding Background}">
+                                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                    </Border>
+                                    <ControlTemplate.Triggers>
+                                        <Trigger Property="IsMouseOver" Value="True">
+                                            <Setter Property="Foreground">
+                                                <Setter.Value>
+                                                    <SolidColorBrush Color="LightBlue" Opacity="0.8"></SolidColorBrush>
+                                                </Setter.Value>
+                                            </Setter>
+                                        </Trigger>
+                                        <Trigger Property="IsEnabled" Value="False">
+                                            <Setter Property="Cursor" Value="No" />
+                                            <Setter Property="Opacity" Value="0.4" />
+                                        </Trigger>
+                                        <Trigger Property="Focusable" Value="False">
+                                            <Setter Property="Cursor" Value="No" />
+                                            <Setter Property="Foreground" Value="LightBlue" />
+                                        </Trigger>
+                                    </ControlTemplate.Triggers>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </Grid.Resources>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                    <Button Click="PageJump_Click" x:Name="PagePrevious" Content="&lt;" Style="{StaticResource PagesButton}"></Button>
+                    <Button Click="PageJump_Click" Content="0" Style="{StaticResource PagesButton}"></Button>
+                    <Button x:Name="PageLeft" Content="..." IsEnabled="False" Style="{StaticResource PagesButton}"></Button>
+                    <Button Click="PageJump_Click" Content="0" Style="{StaticResource PagesButton}"></Button>
+                    <Button Click="PageJump_Click" Content="0" Style="{StaticResource PagesButton}"></Button>
+                    <Button Click="PageJump_Click" Content="0" Style="{StaticResource PagesButton}"></Button>
+                    <Button Click="PageJump_Click" Content="0" Style="{StaticResource PagesButton}"></Button>
+                    <Button Click="PageJump_Click" Content="0" Style="{StaticResource PagesButton}"></Button>
+                    <Button x:Name="PageRight" Content="..." IsEnabled="False" Style="{StaticResource PagesButton}"></Button>
+                    <Button Click="PageJump_Click" Content="0" Style="{StaticResource PagesButton}"></Button>
+                    <Button Click="PageJump_Click" x:Name="PageNext" Content="&gt;" Style="{StaticResource PagesButton}"></Button>
+                    <TextBox x:Name="PageJump" Margin="40 0 0 0" Width="40" Height="30" VerticalContentAlignment="Bottom" HorizontalContentAlignment="Center" FontSize="18"></TextBox>
+                    <TextBlock Margin="5 0 0 0" VerticalAlignment="Center" FontSize="20" Text="页"></TextBlock>
+                    <Button Click="PageJump_Click" Margin="5 0 0 0" VerticalAlignment="Center" Cursor="Hand" FontSize="20" Content="跳转" Tag="{Binding Text, ElementName=PageJump}" Style="{StaticResource MyButton}"></Button>
+                </StackPanel>
+            </Grid>
+            <Grid x:Name="NoDairy" Background="White" Margin="52 0 0 0" Visibility="Hidden">
+                <TextBlock Text="无数据" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="30" Foreground="LightGray"></TextBlock>
+            </Grid>
+        </Grid>
+        <Grid x:Name="ViewArea" Margin="52 0 0 0" Background="White" Visibility="Hidden">
+            <Button Click="ViewClose_Click" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0 10 20 0" Width="50" Height="50" Style="{StaticResource MyButton}" Background="Red">
+                <Button.OpacityMask>
+                    <ImageBrush ImageSource="pack://siteoforigin:,,,/Resources/close.ico" Stretch="Uniform"/>
+                </Button.OpacityMask>
+            </Button>
+            <Button Click="EditDairy_Click" Tag="{Binding WroteDate}" Margin="0 20 120 0" HorizontalAlignment="Right" VerticalAlignment="Top" Width="30" Height="30" Style="{StaticResource MyButton}" Background="Black">
+                <Button.OpacityMask>
+                    <ImageBrush ImageSource="pack://siteoforigin:,,,/Resources/edit.ico" Stretch="Uniform"/>
+                </Button.OpacityMask>
+            </Button>
+            <Button Click="RemoveDairy_Click" Tag="{Binding WroteDate}" Margin="0 20 85 0" HorizontalAlignment="Right" VerticalAlignment="Top" Width="30" Height="30" Style="{StaticResource MyButton}" Background="Red">
+                <Button.OpacityMask>
+                    <ImageBrush ImageSource="pack://siteoforigin:,,,/Resources/trash.ico" Stretch="Uniform"/>
+                </Button.OpacityMask>
+            </Button>
+            <Button Click="View_Click" IsEnabled="{Binding HasPrevious.Item1}" Tag="{Binding  HasPrevious.Item2}" Margin="0 18 200 0" HorizontalAlignment="Right" VerticalAlignment="Top" Width="30" Height="15" Style="{StaticResource MyButton}">
+                <Button.Background>
+                    <SolidColorBrush Color="Black"/>
+                </Button.Background>
+                <Button.OpacityMask>
+                    <ImageBrush ImageSource="pack://siteoforigin:,,,/Resources/previous.ico" Stretch="Uniform"/>
+                </Button.OpacityMask>
+            </Button>
+            <Button Click="View_Click" IsEnabled="{Binding HasNext.Item1}" Tag="{Binding  HasNext.Item2}" Margin="0 37 200 0" HorizontalAlignment="Right" VerticalAlignment="Top" Width="30" Height="15" Style="{StaticResource MyButton}" Background="Black">
+                <Button.OpacityMask>
+                    <ImageBrush ImageSource="pack://siteoforigin:,,,/Resources/next.ico" Stretch="Uniform"/>
+                </Button.OpacityMask>
+            </Button>
+            <TextBlock Text="{Binding WroteDate}" FontSize="20" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="20 10 0 0" Width="120" Height="25"></TextBlock>
+            <TextBlock Text="天气:" FontSize="20" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="150 10 0 0" Width="60" Height="25"></TextBlock>
+            <TextBlock Text="{Binding Wheather}" FontSize="20" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="210 10 0 0" Width="120" Height="25"></TextBlock>
+            <TextBlock Text="{Binding Thema}" FontSize="20" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="20 40 0 0" Width="400" Height="25"></TextBlock>
+            <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled"  Margin="20 70 20 10">
+                <TextBlock Text="{Binding Content}" FontSize="20" TextWrapping="Wrap"></TextBlock>
+            </ScrollViewer>
+        </Grid>
+        <Grid x:Name="EditArea" Background="White" Margin="52 0 0 0" Visibility="Hidden" Tag="{Binding EditingStatus}" IsVisibleChanged="EditArea_IsVisibleChanged">
+            <Button Click="EditDrop_Click" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0 10 60 0" Width="30" Height="30" Style="{StaticResource MyButton}" Background="#FFFF0E0E">
+                <Button.OpacityMask>
+                    <ImageBrush ImageSource="pack://siteoforigin:,,,/Resources/cancel.ico" Stretch="Uniform"/>
+                </Button.OpacityMask>
+            </Button>
+            <Button Click="EditSave_Click" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0 10 20 0" Width="30" Height="30" Style="{StaticResource MyButton}" Background="#FF0B7883">
+                <Button.OpacityMask>
+                    <ImageBrush ImageSource="pack://siteoforigin:,,,/Resources/save.ico" Stretch="Uniform"/>
+                </Button.OpacityMask>
+            </Button>
+            <DatePicker Text="{Binding WroteDate,Mode=TwoWay}" IsEnabled="{Binding IsNew}" VerticalAlignment="Top" HorizontalAlignment="Left" Height="25" FontSize="15" Margin="20 10" DisplayDateEnd="{x:Static sys:DateTime.Today}"></DatePicker>
+            <TextBlock Text="天气:" FontSize="20" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="150 10 0 0" Width="60" Height="25"></TextBlock>
+            <ComboBox  x:Name="EditWheather" Text="{Binding Wheather}" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="200 10" Height="25" Width="180" IsEditable="True" FontSize="15" TextBoxBase.TextChanged="EditWheather_TextChanged">
+                <ComboBoxItem Content="晴"></ComboBoxItem>
+                <ComboBoxItem Content="阴"></ComboBoxItem>
+                <ComboBoxItem Content="雨"></ComboBoxItem>
+                <ComboBoxItem Content="雪"></ComboBoxItem>
+            </ComboBox>
+            <TextBox x:Name="EditThema" Text="{Binding Thema}" MaxLength="20" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="20 45" Height="25" FontSize="15" Width="280"></TextBox>
+            <TextBox x:Name="EditContent" Text="{Binding Content}" Margin="20 80 20 10" FontSize="15" TextWrapping="Wrap" AcceptsReturn="True" ScrollViewer.CanContentScroll="True" ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Disabled"></TextBox>
+        </Grid>
+        <Grid x:Name="Options" Background="White" Margin="52 0 0 0" Visibility="Hidden">
+            <StackPanel HorizontalAlignment="Left" Width="150" Orientation="Vertical" Margin="20 10">
+                <StackPanel.Resources>
+                    <Style x:Key="SingleRadio" TargetType="RadioButton">
+                        <Setter Property="OverridesDefaultStyle" Value="True" />
+                        <Setter Property="Cursor" Value="Hand" />
+                        <Setter Property="Background" Value="Transparent" />
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="RadioButton">
+                                    <Border Name="border" BorderThickness="0" BorderBrush="Black" Background="{TemplateBinding Background}">
+                                        <ContentPresenter HorizontalAlignment="Right" VerticalAlignment="Center" />
+                                    </Border>
+                                    <ControlTemplate.Triggers>
+                                        <Trigger Property="IsMouseOver" Value="True">
+                                            <Setter Property="Opacity" Value="0.8" />
+                                        </Trigger>
+                                        <Trigger Property="IsChecked" Value="True">
+                                            <Setter Property="Background" Value="LightBlue"></Setter>
+                                            <Setter Property="Opacity" Value="0.8" />
+                                            <Setter Property="Cursor" Value="Arrow" />
+                                        </Trigger>
+                                    </ControlTemplate.Triggers>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </StackPanel.Resources>
+                <RadioButton x:Name="CommonSetting" GroupName="Settings" Height="30" Content="基本设置" IsChecked="True" Style="{StaticResource SingleRadio}"/>
+                <RadioButton x:Name="ViewSetting" GroupName="Settings" Height="30" Content="其他" IsChecked="False" Style="{StaticResource SingleRadio}" />
+            </StackPanel>
+            <Border BorderThickness="0 0 1 0" Margin="20 10" Width="152" HorizontalAlignment="Left" >
+                <Border.BorderBrush>
+                    <SolidColorBrush Color="LightGray"></SolidColorBrush>
+                </Border.BorderBrush>
+            </Border>
+            
+            <Grid Margin="180 10 20 10" Background="White" Visibility="{Binding IsChecked,ElementName=CommonSetting,Converter={StaticResource BoolToVis}}">
+                <StackPanel HorizontalAlignment="Left" Margin="20 5" Width="140">
+                    <TextBlock Text="每页件数设置" FontSize="15" TextAlignment="Right" Height="22"></TextBlock>
+                    <TextBlock Text="检索排序" FontSize="15" TextAlignment="Right" Height="21"></TextBlock>
+                </StackPanel>
+                <StackPanel Margin="180 5 10 5">
+                    <StackPanel Height="21" Orientation="Horizontal">
+                        <TextBox x:Name="PerPageCount" Text="{Binding Source={x:Static property:Settings.Default},Path=PerPageCount, Mode=OneWay}" FontSize="15" TextAlignment="Left" HorizontalAlignment="Left" Width="30" TextChanged="PerPageCount_TextChanged"></TextBox>
+                        <Button x:Name="ApplyPerPageCount" IsEnabled="False" Click="ApplyPerPageCount_Click" Width="30" Content="OK" Margin="5 0 0 0"></Button>
+                    </StackPanel>
+                    <StackPanel Height="21" Orientation="Horizontal">
+                        <RadioButton GroupName="OrderByAsc" Checked="OrderByAsc_Changed" Content="Desc" VerticalContentAlignment="Center" Width="60" IsChecked="True"></RadioButton>
+                        <RadioButton GroupName="OrderByAsc" Checked="OrderByAsc_Changed" Content="Asc" VerticalContentAlignment="Center" Width="60" IsChecked="{Binding Source={x:Static property:Settings.Default},Path=OrderByAsc}"></RadioButton>
+                    </StackPanel>
+                </StackPanel>
+            </Grid>
+            <Grid Margin="180 10 20 10" Background="White" Visibility="{Binding IsChecked,ElementName=ViewSetting,Converter={StaticResource BoolToVis}}">
+                <StackPanel HorizontalAlignment="Left" Margin="20 5" Width="140">
+                    <TextBlock Text="文档备份" FontSize="15" TextAlignment="Right" Margin="0 1 0 0" Height="22"></TextBlock>
+                </StackPanel>
+                <StackPanel Margin="180 5 10 5">
+                    <StackPanel Height="21" Orientation="Horizontal">
+                        <Button Click="DataExport_Click" Content="导出" VerticalContentAlignment="Center" Width="40"></Button>
+                        <Button Click="DataImport_Click" Content="导入" VerticalContentAlignment="Center" Margin="20 0 0 0" Width="40"></Button>
+                    </StackPanel>
+                </StackPanel>
+            </Grid>
+        </Grid>
+        <Grid x:Name="MsgBox" Visibility="Hidden">
+            <Grid Background="LightGray" Opacity="0.4"></Grid>
+            <Grid Opacity="1" Margin="250 150" Background="White">
+                <Grid VerticalAlignment="Top" Height="25" Background="#FF3F3F46">
+                    <TextBlock VerticalAlignment="Center" Margin="5 0" FontSize="20" Foreground="White" Text="确认"></TextBlock>
+                </Grid>
+                <TextBlock Text="{Binding MsgText}" FontSize="20" Margin="10 30 10 40"></TextBlock>
+                <Grid VerticalAlignment="Bottom" Height="30">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"></ColumnDefinition>
+                        <ColumnDefinition Width="*"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <Button x:Name="MsgBtnOk" Grid.Column="0" Style="{StaticResource MyButton}" Click="MsgBtn_Click">
+                        <Button.Background>
+                            <SolidColorBrush Color="#FF00C800"/>
+                        </Button.Background>
+                        <Rectangle Width="25" Height="25" Fill="White">
+                            <Rectangle.OpacityMask>
+                                <ImageBrush ImageSource="pack://siteoforigin:,,,/Resources/round.ico" Stretch="Uniform"/>
+                            </Rectangle.OpacityMask>
+                        </Rectangle>
+                    </Button>
+                    <Button x:Name="MsgBtnCancel" Grid.Column="1" Background="#FFFF3232" Style="{StaticResource MyButton}" Click="MsgBtn_Click">
+                        <Rectangle Width="25" Height="25" Fill="White">
+                            <Rectangle.OpacityMask>
+                                <ImageBrush ImageSource="pack://siteoforigin:,,,/Resources/cross.ico" Stretch="Uniform"/>
+                            </Rectangle.OpacityMask>
+                        </Rectangle>
+                    </Button>
+                </Grid>
+            </Grid>
+        </Grid>
+        <TextBlock x:Name="NoticeBar" Visibility="Hidden" HorizontalAlignment="Center" Margin="0, -25 , 0, 0" Background="LightGreen" VerticalAlignment="Top" Padding="5 0" FontSize="20"></TextBlock>
+    </Grid>
+</Window>

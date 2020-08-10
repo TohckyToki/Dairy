@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29230.47
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dairy", "Dairy\Dairy.csproj", "{64F0A61F-29C4-4720-8B08-AA0C08416D62}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dairy-Old", "Dairy-Old\Dairy-Old.csproj", "{64F0A61F-29C4-4720-8B08-AA0C08416D62}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dairy", "Dairy\Dairy.csproj", "{1EFC37B1-C825-402D-B376-77713C913AC2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{64F0A61F-29C4-4720-8B08-AA0C08416D62}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{64F0A61F-29C4-4720-8B08-AA0C08416D62}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{64F0A61F-29C4-4720-8B08-AA0C08416D62}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1EFC37B1-C825-402D-B376-77713C913AC2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1EFC37B1-C825-402D-B376-77713C913AC2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1EFC37B1-C825-402D-B376-77713C913AC2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1EFC37B1-C825-402D-B376-77713C913AC2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
