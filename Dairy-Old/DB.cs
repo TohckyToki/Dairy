@@ -149,11 +149,21 @@ namespace Dairy {
         }
 
         public class Dairy {
+            private string _wroteDate;
             public bool IsNew { get; set; }
             public bool IsSelected { get; set; }
             public Tuple<bool, string> HasPrevious { get; set; }
             public Tuple<bool, string> HasNext { get; set; }
-            public string WroteDate { get; set; }
+            public string WroteDate {
+                get => _wroteDate;
+                set {
+                    if (DateTime.TryParse(value, out var date)) {
+                        _wroteDate = date.ToString("yyyy-MM-dd");
+                    } else {
+                        throw new Exception("Invalid date");
+                    }
+                }
+            }
             public string Wheather { get; set; }
             public string Thema { get; set; }
             public string Content { get; set; }
