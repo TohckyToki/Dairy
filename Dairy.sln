@@ -5,7 +5,7 @@ VisualStudioVersion = 16.0.29230.47
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dairy-Old", "Dairy-Old\Dairy-Old.csproj", "{64F0A61F-29C4-4720-8B08-AA0C08416D62}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dairy", "Dairy\Dairy.csproj", "{1EFC37B1-C825-402D-B376-77713C913AC2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dairy", "Dairy\Dairy.csproj", "{1EFC37B1-C825-402D-B376-77713C913AC2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
