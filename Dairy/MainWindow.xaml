@@ -7,8 +7,8 @@
         xmlns:local="clr-namespace:Dairy"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         xmlns:materialDesignConverters="clr-namespace:MaterialDesignThemes.Wpf.Converters;assembly=MaterialDesignThemes.Wpf"
-        xmlns:system="clr-namespace:System;assembly=mscorlib"
-        mc:Ignorable="d"
+        xmlns:system="clr-namespace:System;assembly=mscorlib" xmlns:views="clr-namespace:Dairy.Views"
+                 mc:Ignorable="d"
         TextElement.Foreground="{DynamicResource MaterialDesignBody}"
         TextElement.FontWeight="Regular"
         TextElement.FontSize="13"
@@ -57,7 +57,8 @@
         </mah:WindowCommands>
     </mah:MetroWindow.RightWindowCommands>
     <Grid>
-        <materialDesign:PopupBox VerticalAlignment="Bottom" HorizontalAlignment="Right" Style="{StaticResource MaterialDesignMultiFloatingActionAccentPopupBox}" PlacementMode="TopAndAlignCentres" PopupMode="MouseOverEager" Background="#FFFF3939" BorderBrush="#FF5D4942">
+        <views:MainView/>
+        <materialDesign:PopupBox Margin="5" VerticalAlignment="Bottom" HorizontalAlignment="Right" Style="{StaticResource MaterialDesignMultiFloatingActionAccentPopupBox}" PlacementMode="TopAndAlignCentres" PopupMode="MouseOverEager" Background="#FFFF3939" BorderBrush="#FF5D4942">
             <StackPanel>
                 <StackPanel.Resources>
                     <Style TargetType="Button" BasedOn="{StaticResource MaterialDesignIconForegroundButton}">
@@ -67,10 +68,18 @@
                         </Style.Setters>
                     </Style>
                 </StackPanel.Resources>
-                <Button><materialDesign:PackIcon Kind="FilePlusOutline" /></Button>
-                <Button><materialDesign:PackIcon Kind="FileEditOutline" /></Button>
-                <Button><materialDesign:PackIcon Kind="FileDelimitedOutline" /></Button>
-                <Button Margin="0 20 0 0"><materialDesign:PackIcon Kind="Settings" /></Button>
+                <Button>
+                    <materialDesign:PackIcon Kind="FilePlusOutline" />
+                </Button>
+                <Button>
+                    <materialDesign:PackIcon Kind="FileEditOutline" />
+                </Button>
+                <Button>
+                    <materialDesign:PackIcon Kind="FileDelimitedOutline" />
+                </Button>
+                <Button Margin="0 20 0 0">
+                    <materialDesign:PackIcon Kind="Settings" />
+                </Button>
             </StackPanel>
         </materialDesign:PopupBox>
     </Grid>
