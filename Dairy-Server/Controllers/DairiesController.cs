@@ -24,7 +24,7 @@ namespace Dairy_Server.Controllers
         }
 
         [HttpGet("getDairyList")]
-        public async Task<IEnumerable<DairyModel>> GetDairyListAsync([FromQuery] int page, [FromQuery] int pageSize)
+        public async Task<List<DairyModel>> GetDairyListAsync([FromQuery] int page, [FromQuery] int pageSize)
         {
             return await this.DairyContext.Dairies
                             .Where(e => e.Enabled)
