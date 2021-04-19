@@ -57,30 +57,6 @@
         </mah:WindowCommands>
     </mah:MetroWindow.RightWindowCommands>
     <Grid>
-        <views:MainView/>
-        <materialDesign:PopupBox Margin="5" VerticalAlignment="Bottom" HorizontalAlignment="Right" Style="{StaticResource MaterialDesignMultiFloatingActionAccentPopupBox}" PlacementMode="TopAndAlignCentres" PopupMode="MouseOverEager" Background="#FFFF3939" BorderBrush="#FF5D4942">
-            <StackPanel>
-                <StackPanel.Resources>
-                    <Style TargetType="Button" BasedOn="{StaticResource MaterialDesignIconForegroundButton}">
-                        <Style.Setters>
-                            <Setter Property="Background" Value="#FFFF3939" />
-                            <Setter Property="BorderBrush" Value="#FF5D4942"/>
-                        </Style.Setters>
-                    </Style>
-                </StackPanel.Resources>
-                <Button>
-                    <materialDesign:PackIcon Kind="FilePlusOutline" />
-                </Button>
-                <Button>
-                    <materialDesign:PackIcon Kind="FileEditOutline" />
-                </Button>
-                <Button>
-                    <materialDesign:PackIcon Kind="FileDelimitedOutline" />
-                </Button>
-                <Button Margin="0 20 0 0">
-                    <materialDesign:PackIcon Kind="Settings" />
-                </Button>
-            </StackPanel>
-        </materialDesign:PopupBox>
+        <views:MainView />
     </Grid>
 </mah:MetroWindow>

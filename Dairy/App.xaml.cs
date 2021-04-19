@@ -12,8 +12,6 @@ namespace Dairy {
     /// </summary>
     public partial class App : Application {
         protected override void OnStartup(StartupEventArgs e) {
-            var db = new Entities.EntiryManager();
-            db.Database.EnsureCreated();
             base.OnStartup(e);
         }
     }
