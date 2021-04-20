@@ -35,7 +35,7 @@ namespace Dairy.Views
 
         private async void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
-            ViewModel.Dairies = await client.GetFromJsonAsync<List<DairyModel>>("http://localhost:5000/api/Dairies/getDairyList?page=1&pageSize=30");
+            ViewModel.Dairies = await client.GetFromJsonAsync<List<DairyModel>>($"{App.ServerUrl}Dairies/getDairyList?page=1&pageSize=30");
         }
     }
 }
